@@ -42,7 +42,7 @@ public class UsuarioServiceImlp implements UsuarioDetailsService, UserDetailsSer
         }
         
         session.removeAttribute("usuarioImagen");
-        session.setAttribute("usuarioImagen", usuario.getRutaimagen());
+        session.setAttribute("usuarioImagen", usuario.getRutaImagen());
         //si esta aca es porque eciste el usuario sacamos los reoles que tiene
         var roles = new ArrayList<GrantedAuthority>();
         for(Rol rol : usuario.getRoles()){

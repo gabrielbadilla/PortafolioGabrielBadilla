@@ -40,7 +40,7 @@ public class Usuario implements Serializable{
     private String apellidos;
     private String correo;
     private String telefono;
-    private String rutaimagen;
+    private String rutaImagen;
     private boolean activo;
     
     @OneToMany
