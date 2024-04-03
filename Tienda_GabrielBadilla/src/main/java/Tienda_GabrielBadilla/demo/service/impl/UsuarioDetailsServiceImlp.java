@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author gabriel badilla
  */
 @Service("userDetailsService")
-public class UsuarioServiceImlp implements UsuarioDetailsService, UserDetailsService{
+public class UsuarioDetailsServiceImlp implements UsuarioDetailsService, UserDetailsService{
     @Autowired 
     private UsuarioDao usuarioDao;
     @Autowired
