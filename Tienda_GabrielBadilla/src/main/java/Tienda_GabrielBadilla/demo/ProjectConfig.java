@@ -29,6 +29,11 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @Configuration
 public class ProjectConfig implements WebMvcConfigurer{
    
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+    
     /* Los siguientes métodos son para hacer uso de Internacionalización */
     @Bean
     public LocaleResolver localeResolver() {
@@ -83,7 +88,8 @@ public class ProjectConfig implements WebMvcConfigurer{
                         "/producto/modificar/**", "/producto/eliminar/**",
                         "/categoria/nuevo", "/categoria/guardar",
                         "/categoria/modificar/**", "/categoria/eliminar/**",
-                        "/usuario/nuevo", "/usuario/guardar",
+                        "/usuario/nuevo", "/usuario/guardar/**",
+                        "/usuario/guardar2/**",
                         "/usuario/modificar/**", "/usuario/eliminar/**",
                         "/reportes/**"
                 ).hasRole("ADMIN")

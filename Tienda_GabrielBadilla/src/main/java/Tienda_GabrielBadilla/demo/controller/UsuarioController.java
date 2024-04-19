@@ -7,7 +7,9 @@ package Tienda_GabrielBadilla.demo.controller;
 import Tienda_GabrielBadilla.demo.domain.Usuario;
 import Tienda_GabrielBadilla.demo.service.FirebaseStorageService;
 import Tienda_GabrielBadilla.demo.service.UsuarioService;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/usuario")
 public class UsuarioController {
-
+    
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+   
     @Autowired
     private UsuarioService usuarioService;
 
@@ -50,6 +55,27 @@ public class UsuarioController {
                             "usuario",
                             usuario.getIdUsuario()));
         }
+        String contraseñaEncriptada = passwordEncoder.encode(usuario.getPassword());
+        usuario.setPassword(contraseñaEncriptada);
+        
+        usuarioService.save(usuario,true);
+        return "redirect:/usuario/listado";
+    }
+    
+    @PostMapping("/guardar2")
+    public String usuarioGuardar2(Usuario usuario,
+            @RequestParam("imagenFile") MultipartFile imagenFile) {
+        if (!imagenFile.isEmpty()) {
+            usuarioService.save(usuario,false);
+            usuario.setRutaImagen(
+                    firebaseStorageService.cargaImagen(
+                            imagenFile,
+                            "usuario",
+                            usuario.getIdUsuario()));
+        }
+        String contraseña = usuario.getPassword();
+        usuario.setPassword(contraseña);
+        
         usuarioService.save(usuario,true);
         return "redirect:/usuario/listado";
     }
